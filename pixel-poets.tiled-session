@@ -1,0 +1,112 @@
+{
+    "activeFile": "maps/pixel-poets.tmx",
+    "expandedProjectPaths": [
+        ".",
+        "maps"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "Doors.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Hills.tsx": {
+            "scaleInDock": 1
+        },
+        "base-map.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/Autotile_Grass_and_Dirt_Path_Tileset.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "maps/Chest.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/Doors.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/Exterior_Tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/Free_Chicken_House.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/Grass.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        },
+        "maps/Hills.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/House_Tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/Nature_Tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "maps/pixel-poets.tmx": {
+            "scale": 3,
+            "selectedLayer": 13,
+            "viewCenter": {
+                "x": 115.83333333333334,
+                "y": 121
+            }
+        },
+        "maps/pixel-poets.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 0.125,
+            "scaleInEditor": 0.12
+        }
+    },
+    "last.exportedFilePath": "C:/Users/ucupo/OneDrive/Documents/pixel-poets/maps",
+    "last.imagePath": "C:/Users/ucupo/Downloads/Little Dreamyland - Free Pack/Little Dreamyland - Free Pack/Tileset/Object Animation",
+    "map.height": 20,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 25,
+    "openFiles": [
+        "maps/pixel-poets.tmx",
+        "maps/House_Tileset.tsx",
+        "maps/Nature_Tileset.tsx",
+        "maps/Exterior_Tileset.tsx",
+        "maps/Chest.tsx"
+    ],
+    "project": "pixel-poets.tiled-project",
+    "recentFiles": [
+        "maps/Chest.tsx",
+        "maps/Exterior_Tileset.tsx",
+        "maps/Nature_Tileset.tsx",
+        "maps/House_Tileset.tsx",
+        "maps/pixel-poets.tmx",
+        "maps/pixel-poets.tsx",
+        "maps/Hills.tsx",
+        "maps/Free_Chicken_House.tsx",
+        "maps/Grass.tsx",
+        "maps/Doors.tsx",
+        "Doors.tsx",
+        "base-map.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.type": 0
+}
