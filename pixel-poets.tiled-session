@@ -1,8 +1,8 @@
 {
     "activeFile": "maps/pixel-poets.tmx",
     "expandedProjectPaths": [
-        ".",
-        "maps"
+        "maps",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -63,7 +63,7 @@
             "scale": 3,
             "selectedLayer": 13,
             "viewCenter": {
-                "x": 115.83333333333334,
+                "x": 163.83333333333334,
                 "y": 121
             }
         },

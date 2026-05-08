@@ -27,7 +27,7 @@ k.loadSprite("player", "/player.png", {
   },
 });
 
-k.loadSound("bgm", "/boba_date.mp3");
+k.loadSound("bgm", "/Alexandra.mp3");
 
 k.loadSprite("chest", "/Chest.png", {
   sliceX: 5,
@@ -40,25 +40,22 @@ k.loadSprite("chest", "/Chest.png", {
 
 // --- START MENU SCENE ---
 k.scene("start", () => {
-  // Add a nice dark background box for the menu
   k.add([
     k.rect(k.width(), k.height()),
-    k.color(24, 20, 37), // Dark pixel-art style purple/black
+    k.color(24, 20, 37), 
     k.z(0),
   ]);
 
-  // Game Title
   k.add([
-    k.text("PIXEL POEMS", { size: 48 }),
+    k.text("PIXEL POETS", { size: 48 }),
     k.pos(k.width() / 2, k.height() / 4),
     k.anchor("center"),
-    k.color(255, 235, 59), // Yellow
+    k.color(255, 235, 59), 
   ]);
 
-  // Instructions
   k.add([
     k.text(
-      "Controls:\n\n[ WASD ] or [ ARROWS ] to move.\n[ ENTER ] or Tap to open chests.\n\nFind the chests to uncover hidden poems.",
+      "Controls:\n\n[ WASD ] or [ ARROWS ] to move.\n[ ENTER ] or Tap Chest to open.\n\nFind the chests to uncover hidden poems.",
       { size: 24, align: "center", lineSpacing: 12 }
     ),
     k.pos(k.width() / 2, k.height() / 2),
@@ -66,7 +63,6 @@ k.scene("start", () => {
     k.color(255, 255, 255),
   ]);
 
-  // Blinking "Press Enter" prompt
   const startPrompt = k.add([
     k.text("Press ENTER or Tap to Start", { size: 18 }),
     k.pos(k.width() / 2, k.height() - 100),
@@ -74,29 +70,18 @@ k.scene("start", () => {
     k.color(150, 150, 150),
   ]);
 
-  // Make the text blink for that retro arcade feel
   k.loop(0.8, () => {
     startPrompt.hidden = !startPrompt.hidden;
   });
 
-  // --- TRANSITION LOGIC ---
-  // When they press Enter, go to the main game!
-  k.onKeyPress("enter", () => {
-    k.go("main");
-  });
-
-  // Also allow clicking/tapping the screen to start
-  k.onMousePress(() => {
-    k.go("main");
-  });
+  k.onKeyPress("enter", () => k.go("main"));
+  k.onMousePress(() => k.go("main"));
 });
 
 // --- MAIN GAME SCENE ---
 k.scene("main", () => {
-  // 1. ADD BACKGROUND
   k.add([k.sprite("village"), k.pos(0, 0), k.scale(MAP_SCALE), k.z(0)]);
 
-  // 2. CREATE PLAYER
   const player = k.add([
     k.sprite("player", { anim: "idleDown" }),
     k.pos(150 * MAP_SCALE, 200 * MAP_SCALE),
@@ -108,11 +93,10 @@ k.scene("main", () => {
   ]);
 
   const music = k.play("bgm", {
-    loop: true,   // Keeps the song playing forever
-    volume: 0.3,  // 0.0 to 1.0 (0.3 is a good, chill background volume)
+    loop: true,   
+    volume: 0.3,  
   });
 
-  // 3. MAP COLLISION LOGIC
   const collisionLayer = myMap.layers.find(
     (layer: any) => layer.name === "Collision",
   );
@@ -142,17 +126,13 @@ k.scene("main", () => {
     });
   }
 
-  // 4. DYNAMIC CHESTS FROM OBJECT LAYER (No Solid Hitboxes)
   const chestLayer = myMap.layers.find((layer: any) => layer.name === "Chest");
 
   if (chestLayer && chestLayer.objects) {
     chestLayer.objects.forEach((obj: any) => {
-      
-      // Define pixelX and pixelY from the Tiled object to make your trigger math work!
       const pixelX = obj.x;
       const pixelY = obj.y;
 
-      // The visual chest
       const chest = k.add([
         k.sprite("chest", { anim: "closed" }),
         k.pos(pixelX * MAP_SCALE, pixelY * MAP_SCALE),
@@ -161,11 +141,10 @@ k.scene("main", () => {
         "chest",
       ]);
 
-      // The invisible trigger zone around it
       k.add([
         k.rect(16 * MAP_SCALE, 16 * MAP_SCALE),
-        k.pos((pixelX - -16) * MAP_SCALE, (pixelY - -16) * MAP_SCALE), // Kept exactly as requested!
-        k.area(), // Keeps the overlap detection so the poem still works!
+        k.pos((pixelX - -16) * MAP_SCALE, (pixelY - -16) * MAP_SCALE), 
+        k.area(), 
         k.opacity(0),
         {
           parentChest: chest,
@@ -176,7 +155,6 @@ k.scene("main", () => {
     });
   }
 
-  // Global Alert Pop-up
   const alertPop = k.add([
     k.text("!", { size: 24 }),
     k.pos(0, 0),
@@ -185,7 +163,6 @@ k.scene("main", () => {
   ]);
   alertPop.hidden = true;
 
-  // 5. POEM UI
   const poemBox = k.add([
     k.rect(500, 240, { radius: 8 }),
     k.color(20, 20, 20),
@@ -206,7 +183,6 @@ k.scene("main", () => {
   ]);
   poemText.hidden = true;
 
-  // 6. COLLISION & KEY EVENTS
   let isNearChest = false;
   let isPoemOpen = false;
   let activeTrigger: any = null;
@@ -215,7 +191,6 @@ k.scene("main", () => {
     activeTrigger = trigger;
     isNearChest = true;
     alertPop.hidden = false;
-    // Position the "!" exactly above the current chest
     alertPop.pos = k.vec2(
       trigger.pos.x + 5 * MAP_SCALE,
       trigger.pos.y - 12 * MAP_SCALE,
@@ -232,7 +207,7 @@ k.scene("main", () => {
     poemText.hidden = true;
   });
 
-  k.onKeyPress("enter", () => {
+  function togglePoem() {
     if (!isNearChest || !activeTrigger) return;
 
     isPoemOpen = !isPoemOpen;
@@ -247,9 +222,10 @@ k.scene("main", () => {
       activeTrigger.parentChest.play("closed");
       alertPop.hidden = false;
     }
-  });
+  }
 
-  // 7. JOYSTICK & MOVEMENT
+  k.onKeyPress("enter", togglePoem);
+
   const joyCenter = k.vec2(80, k.height() - 80);
   const joyRadius = 40;
   let isDragging = false;
@@ -272,9 +248,36 @@ k.scene("main", () => {
     k.z(101),
   ]);
 
+  // --- THE FOOLPROOF MATH CLICK LOGIC ---
   k.onMousePress(() => {
-    if (k.mousePos().dist(joyCenter) < joyRadius * 1.5) isDragging = true;
+    // 1. If poem is open, tap anywhere to close it
+    if (isPoemOpen) {
+      togglePoem();
+      return; 
+    }
+
+    // 2. If clicking on the joystick area, start dragging
+    if (k.mousePos().dist(joyCenter) < joyRadius * 1.5) {
+      isDragging = true;
+      return;
+    }
+
+    // 3. Math-based chest clicking! 
+    // If the player is near a chest, check if their tap was near the chest box
+    if (isNearChest && activeTrigger) {
+      // Find the center of the chest trigger box
+      const triggerCenter = k.vec2(
+        activeTrigger.pos.x + (16 * MAP_SCALE) / 2,
+        activeTrigger.pos.y + (16 * MAP_SCALE) / 2
+      );
+
+      // If the mouse tap is within 80 pixels of the chest center, open it!
+      if (k.mousePos().dist(triggerCenter) < 80) {
+        togglePoem();
+      }
+    }
   });
+
   k.onMouseMove(() => {
     if (isDragging) {
       const mousePos = k.mousePos();
@@ -285,6 +288,7 @@ k.scene("main", () => {
       joystickDir = direction;
     }
   });
+
   k.onMouseRelease(() => {
     isDragging = false;
     joyStick.pos = joyCenter;
@@ -332,5 +336,4 @@ k.scene("main", () => {
   });
 });
 
-// Launch the start screen first!
 k.go("start");

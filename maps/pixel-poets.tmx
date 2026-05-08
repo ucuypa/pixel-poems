@@ -403,17 +403,66 @@
  <objectgroup id="16" name="Chest">
   <object id="46" x="262.182" y="198.409">
    <properties>
-    <property name="poem" value=""/>
+    <property name="poem">In the quiet hush where twilight falls,
+I hear the way your spirit calls.
+Your hand in mine, a perfect fit,
+A gentle flame, forever lit.
+
+When I look into your shining eyes,
+I see the dawn of endless skies.
+The rushing world begins to fade,
+Within the sanctuary we have made.
+
+Let seasons turn and years depart,
+You are the anchor of my heart.
+Through every storm and shifting sea,
+My soul belongs to you, eternally.</property>
    </properties>
   </object>
   <object id="47" x="72" y="219.333">
    <properties>
-    <property name="poem" value=""/>
+    <property name="poem">The coffee warms my hands, a nervous start,
+As twilight fades and evening sky appears.
+A sudden pull of gravity, my heart,
+Is drawn to you as every worry clears.
+
+Tonight, the planets shine in glowing grace,
+With Venus chasing Jupiter above.
+Yet looking at the quiet, gentle space
+Between us, I've found a new trajectory of love.
+
+The Eta Aquariids trace a silver line,
+From Halley's ancient, interstellar flight.
+A cosmic spark, a beautiful design,
+That brought us to this coffee shop tonight.
+
+The universe is vast, the planets spin,
+But in this baggy sweater, sitting near,
+I feel a perfect orbit now begin,
+And thank the stars that you and i are here.</property>
    </properties>
   </object>
   <object id="48" x="291.667" y="50">
    <properties>
-    <property name="poem" value="Hi Sayang"/>
+    <property name="poem">Two cups of coffee in the evening chill,
+The world slows down, the busy streets recede.
+The sky above is infinite and still,
+But your warm laughter is the light I need.
+
+Like binary stars that share a gentle dance,
+Pulled by a gravity we can't ignore,
+I find a whole new cosmos in your glance,
+And suddenly, the earth holds something more.
+
+The telescope might trace the Milky Way,
+Or seek the craters on a silver moon,
+But sitting by your side, I want to stay,
+And hope this evening doesn't end too soon.
+
+Let galaxies expand and comets fly,
+Across the vastness of the dark and deep.
+Beneath this starry, overarching sky,
+This quiet moment is the one I'll keep.</property>
    </properties>
   </object>
  </objectgroup>
