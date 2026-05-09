@@ -27,7 +27,7 @@ k.loadSprite("player", "/player.png", {
   },
 });
 
-k.loadSound("bgm", "/Alexandra.mp3");
+k.loadSound("bgm", "/boba_date.mp3");
 
 k.loadSprite("chest", "/Chest.png", {
   sliceX: 5,
@@ -40,11 +40,7 @@ k.loadSprite("chest", "/Chest.png", {
 
 // --- START MENU SCENE ---
 k.scene("start", () => {
-  k.add([
-    k.rect(k.width(), k.height()),
-    k.color(24, 20, 37), 
-    k.z(0),
-  ]);
+  k.add([k.rect(k.width(), k.height()), k.color(24, 20, 37), k.z(0)]);
 
   k.add([
     k.text("PIXEL POETS", { size: 48 }),
@@ -92,36 +88,16 @@ k.scene("main", () => {
     "player",
   ]);
 
-  const music = k.play("bgm", {
-    loop: true,   
-    volume: 0.3,  
-  });
+  const music = k.play("bgm", { loop: true, volume: 0.3 });
 
-  const collisionLayer = myMap.layers.find(
-    (layer: any) => layer.name === "Collision",
-  );
+  const collisionLayer = myMap.layers.find((layer: any) => layer.name === "Collision");
   if (collisionLayer && collisionLayer.objects) {
     collisionLayer.objects.forEach((obj: any) => {
       if (obj.polygon) {
-        const points = obj.polygon.map((pt: any) =>
-          k.vec2(pt.x * MAP_SCALE, pt.y * MAP_SCALE),
-        );
-        k.add([
-          k.pos(obj.x * MAP_SCALE, obj.y * MAP_SCALE),
-          k.area({ shape: new k.Polygon(points) }),
-          k.body({ isStatic: true }),
-          k.opacity(0),
-          "wall",
-        ]);
+        const points = obj.polygon.map((pt: any) => k.vec2(pt.x * MAP_SCALE, pt.y * MAP_SCALE));
+        k.add([k.pos(obj.x * MAP_SCALE, obj.y * MAP_SCALE), k.area({ shape: new k.Polygon(points) }), k.body({ isStatic: true }), k.opacity(0), "wall"]);
       } else if (obj.width && obj.height) {
-        k.add([
-          k.rect(obj.width * MAP_SCALE, obj.height * MAP_SCALE),
-          k.pos(obj.x * MAP_SCALE, obj.y * MAP_SCALE),
-          k.area(),
-          k.body({ isStatic: true }),
-          k.opacity(0),
-          "wall",
-        ]);
+        k.add([k.rect(obj.width * MAP_SCALE, obj.height * MAP_SCALE), k.pos(obj.x * MAP_SCALE, obj.y * MAP_SCALE), k.area(), k.body({ isStatic: true }), k.opacity(0), "wall"]);
       }
     });
   }
@@ -137,6 +113,7 @@ k.scene("main", () => {
         k.sprite("chest", { anim: "closed" }),
         k.pos(pixelX * MAP_SCALE, pixelY * MAP_SCALE),
         k.scale(MAP_SCALE),
+        k.area(), 
         k.z(10),
         "chest",
       ]);
@@ -155,16 +132,12 @@ k.scene("main", () => {
     });
   }
 
-  const alertPop = k.add([
-    k.text("!", { size: 24 }),
-    k.pos(0, 0),
-    k.color(255, 255, 0),
-    k.z(100),
-  ]);
+  const alertPop = k.add([k.text("!", { size: 24 }), k.pos(0, 0), k.color(255, 255, 0), k.z(100)]);
   alertPop.hidden = true;
 
+  // --- 5. POEM UI WITH SCROLL ARROWS ---
   const poemBox = k.add([
-    k.rect(500, 240, { radius: 8 }),
+    k.rect(500, 400, { radius: 8 }),
     k.color(20, 20, 20),
     k.outline(4, k.rgb(255, 255, 255)),
     k.pos(k.width() / 2, k.height() / 2),
@@ -172,17 +145,39 @@ k.scene("main", () => {
     k.fixed(),
     k.z(200),
   ]);
+
+  const poemClip = poemBox.add([
+    k.rect(480, 360), // Made slightly shorter to leave room for the arrows
+    k.pos(0, 0),
+    k.anchor("center"),
+    k.mask(), 
+    k.color(20, 20, 20),
+  ]);
+
+  const poemText = poemClip.add([
+    k.text("", { size: 18, width: 440, align: "center", lineSpacing: 8 }),
+    k.pos(0, -170), 
+    k.anchor("top"), 
+  ]);
+
+  // The visual cues! (Attached to the poemBox so they hide/show automatically)
+  const upArrow = poemBox.add([
+    k.text("▲", { size: 16 }),
+    k.pos(0, -185), // Positioned at the top inside edge
+    k.anchor("center"),
+    k.color(150, 150, 150),
+  ]);
+
+  const downArrow = poemBox.add([
+    k.text("▼", { size: 16 }),
+    k.pos(0, 185), // Positioned at the bottom inside edge
+    k.anchor("center"),
+    k.color(150, 150, 150),
+  ]);
+
   poemBox.hidden = true;
 
-  const poemText = k.add([
-    k.text("", { size: 18, width: 440, align: "center" }),
-    k.pos(k.width() / 2, k.height() / 2),
-    k.anchor("center"),
-    k.fixed(),
-    k.z(201),
-  ]);
-  poemText.hidden = true;
-
+  // 6. COLLISION & INTERACTION EVENTS
   let isNearChest = false;
   let isPoemOpen = false;
   let activeTrigger: any = null;
@@ -191,10 +186,7 @@ k.scene("main", () => {
     activeTrigger = trigger;
     isNearChest = true;
     alertPop.hidden = false;
-    alertPop.pos = k.vec2(
-      trigger.pos.x + 5 * MAP_SCALE,
-      trigger.pos.y - 12 * MAP_SCALE,
-    );
+    alertPop.pos = k.vec2(trigger.pos.x + 5 * MAP_SCALE, trigger.pos.y - 12 * MAP_SCALE);
   });
 
   player.onCollideEnd("chestTrigger", () => {
@@ -204,7 +196,6 @@ k.scene("main", () => {
     alertPop.hidden = true;
     isPoemOpen = false;
     poemBox.hidden = true;
-    poemText.hidden = true;
   });
 
   function togglePoem() {
@@ -212,10 +203,10 @@ k.scene("main", () => {
 
     isPoemOpen = !isPoemOpen;
     poemBox.hidden = !isPoemOpen;
-    poemText.hidden = !isPoemOpen;
 
     if (isPoemOpen) {
       poemText.text = activeTrigger.poem;
+      poemText.pos.y = -170; // Reset scroll to top
       activeTrigger.parentChest.play("open");
       alertPop.hidden = true;
     } else {
@@ -226,71 +217,67 @@ k.scene("main", () => {
 
   k.onKeyPress("enter", togglePoem);
 
+  k.onClick("chest", (clickedChest) => {
+    if (!isPoemOpen && isNearChest && activeTrigger && activeTrigger.parentChest === clickedChest) {
+      togglePoem();
+    }
+  });
+
+  // 7. SCROLLING & JOYSTICK INPUTS
   const joyCenter = k.vec2(80, k.height() - 80);
   const joyRadius = 40;
-  let isDragging = false;
+  let isDraggingJoystick = false;
   let joystickDir = k.vec2(0, 0);
+  
+  let isDraggingText = false;
+  let lastTextMouseY = 0;
 
-  const joyBase = k.add([
-    k.circle(joyRadius),
-    k.color(255, 255, 255),
-    k.opacity(0.3),
-    k.pos(joyCenter),
-    k.fixed(),
-    k.z(100),
-  ]);
-  const joyStick = k.add([
-    k.circle(20),
-    k.color(255, 255, 255),
-    k.opacity(0.6),
-    k.pos(joyCenter),
-    k.fixed(),
-    k.z(101),
-  ]);
+  const joyBase = k.add([k.circle(joyRadius), k.color(255, 255, 255), k.opacity(0.3), k.pos(joyCenter), k.fixed(), k.z(100)]);
+  const joyStick = k.add([k.circle(20), k.color(255, 255, 255), k.opacity(0.6), k.pos(joyCenter), k.fixed(), k.z(101)]);
 
-  // --- THE FOOLPROOF MATH CLICK LOGIC ---
+  k.onScroll((delta) => {
+    if (isPoemOpen) poemText.pos.y -= delta.y * 0.5; 
+  });
+
   k.onMousePress(() => {
-    // 1. If poem is open, tap anywhere to close it
     if (isPoemOpen) {
-      togglePoem();
+      const mx = k.mousePos().x;
+      const my = k.mousePos().y;
+      const bx = k.width() / 2;
+      const by = k.height() / 2;
+
+      if (mx > bx - 250 && mx < bx + 250 && my > by - 200 && my < by + 200) {
+        isDraggingText = true;
+        lastTextMouseY = my;
+      } else {
+        togglePoem(); 
+      }
       return; 
     }
 
-    // 2. If clicking on the joystick area, start dragging
     if (k.mousePos().dist(joyCenter) < joyRadius * 1.5) {
-      isDragging = true;
-      return;
-    }
-
-    // 3. Math-based chest clicking! 
-    // If the player is near a chest, check if their tap was near the chest box
-    if (isNearChest && activeTrigger) {
-      // Find the center of the chest trigger box
-      const triggerCenter = k.vec2(
-        activeTrigger.pos.x + (16 * MAP_SCALE) / 2,
-        activeTrigger.pos.y + (16 * MAP_SCALE) / 2
-      );
-
-      // If the mouse tap is within 80 pixels of the chest center, open it!
-      if (k.mousePos().dist(triggerCenter) < 80) {
-        togglePoem();
-      }
+      isDraggingJoystick = true;
     }
   });
 
   k.onMouseMove(() => {
-    if (isDragging) {
+    if (isDraggingJoystick) {
       const mousePos = k.mousePos();
       const direction = mousePos.sub(joyCenter).unit();
-      joyStick.pos = joyCenter.add(
-        direction.scale(Math.min(mousePos.dist(joyCenter), joyRadius)),
-      );
+      joyStick.pos = joyCenter.add(direction.scale(Math.min(mousePos.dist(joyCenter), joyRadius)));
       joystickDir = direction;
+    }
+    
+    if (isDraggingText && isPoemOpen) {
+      const deltaY = k.mousePos().y - lastTextMouseY;
+      poemText.pos.y += deltaY;
+      lastTextMouseY = k.mousePos().y;
     }
   });
 
   k.onMouseRelease(() => {
-    isDragging = false;
+    isDraggingJoystick = false;
+    isDraggingText = false;
     joyStick.pos = joyCenter;
     joystickDir = k.vec2(0, 0);
   });
@@ -299,14 +286,34 @@ k.scene("main", () => {
   let currentAnim = "idleDown";
 
   player.onUpdate(() => {
-    if (isPoemOpen) return;
+    // --- SMART ARROW LOGIC & SCROLL CLAMPING ---
+    if (isPoemOpen) {
+      if (k.isKeyDown("up")) poemText.pos.y += 4;
+      if (k.isKeyDown("down")) poemText.pos.y -= 4;
+
+      const maxY = -170; 
+      const minY = Math.min(-170, 180 - poemText.height); 
+
+      // Keep text inside boundaries
+      if (poemText.pos.y > maxY) poemText.pos.y = maxY;
+      if (poemText.pos.y < minY) poemText.pos.y = minY;
+
+      // Update Arrow Visibility
+      // If we are at the very top (maxY), hide the up arrow. Otherwise, show it.
+      upArrow.hidden = poemText.pos.y >= maxY;
+      
+      // If we are at the very bottom (minY), hide the down arrow. Otherwise, show it.
+      downArrow.hidden = poemText.pos.y <= minY;
+
+      return; 
+    }
 
     let moveDir = k.vec2(0, 0);
     if (k.isKeyDown("left") || k.isKeyDown("a")) moveDir.x = -1;
     if (k.isKeyDown("right") || k.isKeyDown("d")) moveDir.x = 1;
     if (k.isKeyDown("up") || k.isKeyDown("w")) moveDir.y = -1;
     if (k.isKeyDown("down") || k.isKeyDown("s")) moveDir.y = 1;
-    if (isDragging) moveDir = joystickDir;
+    if (isDraggingJoystick) moveDir = joystickDir;
 
     if (moveDir.x === 0 && moveDir.y === 0) {
       if (!currentAnim.startsWith("idle")) {
@@ -322,12 +329,8 @@ k.scene("main", () => {
 
     let newAnim =
       Math.abs(moveVector.x) > Math.abs(moveVector.y)
-        ? moveVector.x > 0
-          ? "walkRight"
-          : "walkLeft"
-        : moveVector.y > 0
-          ? "walkDown"
-          : "walkUp";
+        ? moveVector.x > 0 ? "walkRight" : "walkLeft"
+        : moveVector.y > 0 ? "walkDown" : "walkUp";
 
     if (newAnim !== currentAnim) {
       player.play(newAnim);

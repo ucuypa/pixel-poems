@@ -9705,7 +9705,7 @@ export const myMap = { "compressionlevel":-1,
                         {
                          "name":"poem",
                          "type":"string",
-                         "value":""
+                         "value":"In the quiet hush where twilight falls,\nI hear the way your spirit calls.\nYour hand in mine, a perfect fit,\nA gentle flame, forever lit.\n\nWhen I look into your shining eyes,\nI see the dawn of endless skies.\nThe rushing world begins to fade,\nWithin the sanctuary we have made.\n\nLet seasons turn and years depart,\nYou are the anchor of my heart.\nThrough every storm and shifting sea,\nMy soul belongs to you, eternally."
                         }],
                  "rotation":0,
                  "type":"",
@@ -9723,7 +9723,7 @@ export const myMap = { "compressionlevel":-1,
                         {
                          "name":"poem",
                          "type":"string",
-                         "value":""
+                         "value":"The coffee warms my hands, a nervous start,\nAs twilight fades and evening sky appears.\nA sudden pull of gravity, my heart,\nIs drawn to you as every worry clears.\n\nTonight, the planets shine in glowing grace,\nWith Venus chasing Jupiter above.\nYet looking at the quiet, gentle space\nBetween us, I've found a new trajectory of love.\n\nThe Eta Aquariids trace a silver line,\nFrom Halley's ancient, interstellar flight.\nA cosmic spark, a beautiful design,\nThat brought us to this coffee shop tonight.\n\nThe universe is vast, the planets spin,\nBut in this baggy sweater, sitting near,\nI feel a perfect orbit now begin,\nAnd thank the stars that you and i are here."
                         }],
                  "rotation":0,
                  "type":"",
@@ -9741,7 +9741,7 @@ export const myMap = { "compressionlevel":-1,
                         {
                          "name":"poem",
                          "type":"string",
-                         "value":"Hi Sayang"
+                         "value":"Two cups of coffee in the evening chill,\nThe world slows down, the busy streets recede.\nThe sky above is infinite and still,\nBut your warm laughter is the light I need.\n\nLike binary stars that share a gentle dance,\nPulled by a gravity we can't ignore,\nI find a whole new cosmos in your glance,\nAnd suddenly, the earth holds something more.\n\nThe telescope might trace the Milky Way,\nOr seek the craters on a silver moon,\nBut sitting by your side, I want to stay,\nAnd hope this evening doesn't end too soon.\n\nLet galaxies expand and comets fly,\nAcross the vastness of the dark and deep.\nBeneath this starry, overarching sky,\nThis quiet moment is the one I'll keep."
                         }],
                  "rotation":0,
                  "type":"",
